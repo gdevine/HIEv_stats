@@ -85,6 +85,9 @@ hiev_stats = {}
 # root element
 hiev_stats['hiev_stats'] = {}
 
+# Include date and time of when the sript was run
+hiev_stats['hiev_stats']['date_generated'] = str(datetime.today().strftime("%a %b %d %Y - %H:%M"))
+
 # total files
 hiev_stats['hiev_stats']['total_files'] = len(js_all)
 
@@ -93,7 +96,7 @@ hiev_stats['hiev_stats']['last_day_files'] = len(js_lastday)
 
 # files by type
 types = hiev_stats['hiev_stats']['types'] = []
-for type in ['RAW', 'PROCESSED', 'CLEANSED', 'ERROR']:    
+for type in ['RAW', 'PROCESSED', 'CLEANSED', 'ERROR', 'PACKAGE', 'UNKNOWN']:    
     type_record = {}
     type_record['type'] = type
     type_record['total_files']=match_count({'file_processing_status':type}, js_all)
@@ -120,7 +123,7 @@ for facrow in facilities_csv:
     
     # Type by facility - For each facility begin a 'type' nested section
     types = fac_record['Types'] = []
-    for type in ['RAW', 'PROCESSED', 'CLEANSED', 'ERROR']:    
+    for type in ['RAW', 'PROCESSED', 'CLEANSED', 'ERROR', 'PACKAGE', 'UNKNOWN']:    
         type_record = {}
         type_record['type'] = type
         type_record['total_files']=match_count({'facility_id': str(facrow[0]), 'file_processing_status':type}, js_all)
